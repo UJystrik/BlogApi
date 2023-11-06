@@ -256,4 +256,14 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+    /*public function actionRbc(){
+       $role = Yii::$app->authManager->createRole('admin');
+       $role->description = 'Администратор';
+       Yii::$app->authManager->add($role);
+       $role2 = Yii::$app->authManager->createRole('user');
+       $role2->description = 'Пользователь';
+       Yii::$app->authManager->add($role2);
+       return 123;
+   }*/
+
 }

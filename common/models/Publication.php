@@ -9,10 +9,10 @@ use yii\db\ActiveRecord;
  * Publication model
  *
  * @property integer $id
- * @property integer $user_id
+ * @property integer $userId
  * @property string $text
- * @property integer $created_at
- * @property integer $updated_at
+ * @property integer $createdAt
+ * @property integer $updatedAt
  */
 
 class Publication extends ActiveRecord
@@ -31,17 +31,17 @@ class Publication extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'text'], 'required'],
-            [['access_token', 'text'], 'required', 'on' => self::SCENARIO_CREATE],
-            [['access_token'], 'required', 'on' => self::SCENARIO_VIEW_MY]
+            [['userId', 'text'], 'required'],
+            [['accessToken', 'text'], 'required', 'on' => self::SCENARIO_CREATE],
+            [['accessToken'], 'required', 'on' => self::SCENARIO_VIEW_MY]
         ];
     }
 
     public function scenarios(){
         $scenarios = parent::scenarios();
-        $scenarios['create'] = ['access_token', 'text'];
+        $scenarios['create'] = ['accessToken', 'text'];
         $scenarios['view-all'] = ['limit', 'offset'];
-        $scenarios['view-my'] = ['access_token', 'limit', 'offset'];
+        $scenarios['view-my'] = ['accessToken', 'limit', 'offset'];
         return $scenarios;
     }
 
@@ -62,7 +62,7 @@ class Publication extends ActiveRecord
 
     public static function findByUserId($user_id)
     {
-        return static::findOne(['user_id' => $user_id]);
+        return static::findOne(['userId' => $user_id]);
     }
 
     public static function findAllPublications()
@@ -75,10 +75,10 @@ class Publication extends ActiveRecord
         return static::find()->limit($limit)->offset($offset)->all();
     }
 
-    public static function findMyPublications($accessToken,$limit, $offset)
+    public static function findMyPublications($accessToken, $limit, $offset)
     {
-        $user_id = User::findByAccessToken($accessToken)->id;
-        return static::find()->where('user_id = :id', [':id' => $user_id])->limit($limit)->offset($offset)->all();
+        $userId = User::findByAccessToken($accessToken)->id;
+        return static::find()->where('userId = :id', [':id' => $userId])->limit($limit)->offset($offset)->all();
     }
 
     public function getId()
@@ -91,7 +91,7 @@ class Publication extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'userId']);
     }
 
 }

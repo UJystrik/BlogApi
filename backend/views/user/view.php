@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\User $model */
+/** @var backend\models\UserCRUD $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'User Cruds', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="user-view">
+<div class="user-crud-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,14 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
+            'authKey',
+            'passwordHash',
+            'passwordResetToken',
             'email:email',
             'status',
-            'created_at',
-            'updated_at',
-            'verification_token',
+            'createdAt',
+            'updatedAt',
+            'verificationToken',
         ],
     ]) ?>
 

@@ -2,15 +2,14 @@
 
 namespace backend\controllers;
 
-use common\models\Publication;
+use backend\models\PublicationCRUD;
 use backend\models\PublicationSearch;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PublicationController implements the CRUD actions for Publication model.
+ * PublicationController implements the CRUD actions for PublicationCRUD model.
  */
 class PublicationController extends Controller
 {
@@ -22,16 +21,6 @@ class PublicationController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                    'class' => AccessControl::class,
-                    'rules' => [
-                        [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                            'allow' => true,
-                            'roles' => ['admin'],
-                        ],
-                    ],
-                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -43,7 +32,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * Lists all Publication models.
+     * Lists all PublicationCRUD models.
      *
      * @return string
      */
@@ -59,7 +48,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * Displays a single Publication model.
+     * Displays a single PublicationCRUD model.
      * @param int $id
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -72,13 +61,13 @@ class PublicationController extends Controller
     }
 
     /**
-     * Creates a new Publication model.
+     * Creates a new PublicationCRUD model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Publication();
+        $model = new PublicationCRUD();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -94,7 +83,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * Updates an existing Publication model.
+     * Updates an existing PublicationCRUD model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id
      * @return string|\yii\web\Response
@@ -114,7 +103,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * Deletes an existing Publication model.
+     * Deletes an existing PublicationCRUD model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id
      * @return \yii\web\Response
@@ -128,15 +117,15 @@ class PublicationController extends Controller
     }
 
     /**
-     * Finds the Publication model based on its primary key value.
+     * Finds the PublicationCRUD model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id
-     * @return Publication the loaded model
+     * @return PublicationCRUD the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Publication::findOne(['id' => $id])) !== null) {
+        if (($model = PublicationCRUD::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

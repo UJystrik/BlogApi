@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\Publication $model */
+/** @var backend\models\PublicationCRUD $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Publications', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Publication Cruds', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="publication-view">
+<div class="publication-crud-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,10 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'user_id',
+            'userId',
             'text',
-            'created_at',
-            'updated_at',
+            'createdAt',
+            'updatedAt',
         ],
     ]) ?>
 

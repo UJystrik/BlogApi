@@ -1,6 +1,6 @@
 <?php
 
-use common\models\Publication;
+use backend\models\PublicationCRUD;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -10,15 +10,15 @@ use yii\grid\GridView;
 /** @var backend\models\PublicationSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Publications';
+$this->title = 'Publication Cruds';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="publication-index">
+<div class="publication-crud-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Publication', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Publication Crud', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,13 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
+            'userId',
             'text',
-            'created_at',
-            'updated_at',
+            'createdAt',
+            'updatedAt',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Publication $model, $key, $index, $column) {
+                'urlCreator' => function ($action, PublicationCRUD $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

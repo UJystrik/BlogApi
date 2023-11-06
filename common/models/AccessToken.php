@@ -9,8 +9,8 @@ use yii\db\ActiveRecord;
  * Access Token model
  *
  * @property integer $id
- * @property integer $user_id
- * @property string $access_token
+ * @property integer $userId
+ * @property string $accessToken
  */
 
 class AccessToken extends ActiveRecord
@@ -26,11 +26,11 @@ class AccessToken extends ActiveRecord
     public function setAccessToken()
     {
         $authKey = Yii::$app->security->generateRandomString();
-        while(static::findOne(['access_token' => $authKey])) {
+        while(static::findOne(['accessToken' => $authKey])) {
             $authKey = Yii::$app->security->generateRandomString();
         }
-        $this->access_token = $authKey;
-        return $this->access_token;
+        $this->accessToken = $authKey;
+        return $this->accessToken;
     }
 
     /**
@@ -38,14 +38,14 @@ class AccessToken extends ActiveRecord
      */
     public function getAccessToken(): string
     {
-        return $this->access_token;
+        return $this->accessToken;
     }
 
     public static function findByAccessToken($accessToken){
-        return static::findOne(['access_token' => $accessToken]);
+        return static::findOne(['accessToken' => $accessToken]);
     }
 
     public function getUser(){
-        return $this->hasOne(User::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'userId']);
     }
 }

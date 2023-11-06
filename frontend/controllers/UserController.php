@@ -38,7 +38,7 @@ class UserController extends Controller
             throw new BadRequestHttpException('Failed to save user');
         }
         $accessToken->setAccessToken();
-        $accessToken->user_id = $newUser->getId();
+        $accessToken->userId = $newUser->getId();
         if(!$accessToken->save()){
             $newUser->delete();
             throw new BadRequestHttpException('Failed to save token');
@@ -46,7 +46,7 @@ class UserController extends Controller
         $userRole = Yii::$app->authManager->getRole('user');
         Yii::$app->authManager->assign($userRole, $newUser->id);
         return [
-            'access_token' => $accessToken->access_token,
+            'accessToken' => $accessToken->accessToken,
         ];
     }
 
@@ -64,7 +64,7 @@ class UserController extends Controller
         }
         $accessToken = $user->accessToken->getAccessToken();
         return [
-            'access_token' => $accessToken,
+            'accessToken' => $accessToken,
         ];
     }
 

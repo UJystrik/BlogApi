@@ -14,22 +14,22 @@ class m231024_105200_create_publication_table extends Migration
     {
         $this->createTable('{{%publication}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+            'userId' => $this->integer()->notNull(),
             'text' => $this->string()->notNull(),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer(),
+            'createdAt' => $this->integer()->notNull(),
+            'updatedAt' => $this->integer(),
         ]);
 
         $this->createIndex(
-            'idx-publication-user_id',
+            'idx-publication-userId',
             'publication',
-            'user_id'
+            'userId'
         );
 
         $this->addForeignKey(
-            'fk-publication-user_id',
+            'fk-publication-userId',
             'publication',
-            'user_id',
+            'userId',
             'user',
             'id',
             'CASCADE'
@@ -42,12 +42,12 @@ class m231024_105200_create_publication_table extends Migration
     public function safeDown()
     {
         $this->dropIndex(
-            'idx-publication-user_id',
+            'idx-publication-userId',
             'publication'
         );
 
         $this->dropForeignKey(
-            'fk-publication-user_id',
+            'fk-publication-userId',
             'publication'
         );
 

@@ -5,7 +5,6 @@ use common\models\Publication;
 use common\models\User;
 use Yii;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 /**
  * Site controller
@@ -39,7 +38,7 @@ class PublicationsController extends Controller
 
     public function actionViewMy()
     {
-        $accessToken = Yii::$app->request->post('access_token');
+        $accessToken = Yii::$app->request->post('accessToken');
         $limit = Yii::$app->request->post('limit');
         $offset = Yii::$app->request->post('offset');
         $publicationsList = Publication::findMyPublications($accessToken, $limit, $offset);
@@ -55,8 +54,8 @@ class PublicationsController extends Controller
     {
         $newPublication = new Publication();
         $newPublication->attributes = Yii::$app->request->post();
-        $accessToken = Yii::$app->request->post('access_token');
-        $newPublication->user_id = User::findByAccessToken($accessToken)->id;
+        $accessToken = Yii::$app->request->post('accessToken');
+        $newPublication->userId = User::findByAccessToken($accessToken)->id;
         $newPublication->save();
     }
 

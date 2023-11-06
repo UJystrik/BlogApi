@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="publication-search">
+<div class="publication-crud-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,13 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'user_id') ?>
+    <?= $form->field($model, 'userId') ?>
 
     <?= $form->field($model, 'text') ?>
 
-    <?= $form->field($model, 'created_at') ?>
+    <?= $form->field($model, 'createdAt') ?>
 
-    <?= $form->field($model, 'updated_at') ?>
+    <?= $form->field($model, 'updatedAt') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

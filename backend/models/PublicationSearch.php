@@ -4,12 +4,12 @@ namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Publication;
+use backend\models\PublicationCRUD;
 
 /**
- * PublicationSearch represents the model behind the search form of `common\models\Publication`.
+ * PublicationSearch represents the model behind the search form of `backend\models\PublicationCRUD`.
  */
-class PublicationSearch extends Publication
+class PublicationSearch extends PublicationCRUD
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,7 @@ class PublicationSearch extends Publication
     public function rules()
     {
         return [
-            [['id', 'user_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'userId', 'createdAt', 'updatedAt'], 'integer'],
             [['text'], 'safe'],
         ];
     }
@@ -40,7 +40,7 @@ class PublicationSearch extends Publication
      */
     public function search($params)
     {
-        $query = Publication::find();
+        $query = PublicationCRUD::find();
 
         // add conditions that should always apply here
 
@@ -59,9 +59,9 @@ class PublicationSearch extends Publication
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'userId' => $this->userId,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt,
         ]);
 
         $query->andFilterWhere(['like', 'text', $this->text]);
