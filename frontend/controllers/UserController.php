@@ -29,40 +29,17 @@ class UserController extends Controller
 
     public function actionSignup()
     {
-        $newUser = new User();
-        $accessToken = new AccessToken();
-        $newUser->attributes = Yii::$app->request->post();
-        $newUser->setPassword(Yii::$app->request->post('password'));
-        $newUser->generateAuthKey();
-        if(!$newUser->save()){
-            throw new BadRequestHttpException('Failed to save user');
-        }
-        $accessToken->setAccessToken();
-        $accessToken->userId = $newUser->getId();
-        if(!$accessToken->save()){
-            $newUser->delete();
-            throw new BadRequestHttpException('Failed to save token');
-        }
-        $userRole = Yii::$app->authManager->getRole('user');
-        Yii::$app->authManager->assign($userRole, $newUser->id);
+        $attributes = Yii::$app->request->post();
+        $accessToken = User::signupUserWidthRole(Yii::$app->request->post(), User::ROLE_USER);
         return [
-            'accessToken' => $accessToken->accessToken,
+            'accessToken' => $accessToken,
         ];
     }
 
     public function actionLogin()
     {
-        $newUser = new User();
-        $username = Yii::$app->request->post('username');
-        $password = Yii::$app->request->post('password');
-        $user = User::findByUsername($username);
-        if(!$user){
-            throw new BadRequestHttpException('Invalid login');
-        }
-        if(!$user->validatePassword($password)){
-            throw new BadRequestHttpException('Invalid password');
-        }
-        $accessToken = $user->accessToken->getAccessToken();
+        $attributes = Yii::$app->request->post();
+        $accessToken = User::loginUser($attributes);;
         return [
             'accessToken' => $accessToken,
         ];

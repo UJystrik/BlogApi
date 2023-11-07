@@ -2,8 +2,10 @@
 
 namespace common\models;
 
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * Publication model
@@ -39,9 +41,9 @@ class Publication extends ActiveRecord
 
     public function scenarios(){
         $scenarios = parent::scenarios();
-        $scenarios['create'] = ['accessToken', 'text'];
-        $scenarios['view-all'] = ['limit', 'offset'];
-        $scenarios['view-my'] = ['accessToken', 'limit', 'offset'];
+        $scenarios[self::SCENARIO_CREATE] = ['accessToken', 'text'];
+        $scenarios[self::SCENARIO_VIEW_ALL] = ['limit', 'offset'];
+        $scenarios[self::SCENARIO_VIEW_MY] = ['accessToken', 'limit', 'offset'];
         return $scenarios;
     }
 
@@ -67,18 +69,46 @@ class Publication extends ActiveRecord
 
     public static function findAllPublications()
     {
-        return static::find()->indexBy('id')->all();
+        return static::find()
+            ->indexBy('id')
+            ->all();
     }
 
-    public static function findPublications($limit, $offset)
+    public static function findPublications($attributes)
     {
-        return static::find()->limit($limit)->offset($offset)->all();
+        return static::find()
+            ->limit(isset($attributes['limit']) ? $attributes['limit'] : null)
+            ->offset(isset($attributes['offset']) ? $attributes['offset'] : null)
+            ->all();
     }
 
-    public static function findMyPublications($accessToken, $limit, $offset)
+    public static function findMyPublications($attributes)
     {
-        $userId = User::findByAccessToken($accessToken)->id;
-        return static::find()->where('userId = :id', [':id' => $userId])->limit($limit)->offset($offset)->all();
+        if(!isset($attributes['accessToken'])){
+            throw new Exception('Unauthorized');
+        }
+        $userId = User::findByAccessToken($attributes['accessToken'])->id;
+        return static::find()
+            ->where('userId = :id', [':id' => $userId])
+            ->limit(isset($attributes['limit']) ? $attributes['limit'] : null)
+            ->offset(isset($attributes['offset']) ? $attributes['offset'] : null)
+            ->all();
+    }
+
+    public static function createPublication($attributes){
+        if(!isset($attributes['accessToken'])){
+            throw new Exception('Unauthorized');
+        }
+        $newPublication = new Publication();
+
+        $newPublication->userId = User::findByAccessToken($attributes['accessToken'])->id;
+        $newPublication->text = $attributes['text'];
+        if(!$newPublication->validate()){
+            throw new Exception('The parameters are incorrect');
+        }
+        if(!$newPublication->save()){
+            throw new Exception('The publication is not saved');
+        }
     }
 
     public function getId()

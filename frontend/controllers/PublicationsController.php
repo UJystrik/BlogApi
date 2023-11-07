@@ -30,19 +30,20 @@ class PublicationsController extends Controller
 
     public function actionViewAll()
     {
-        $limit = Yii::$app->request->post('limit');
-        $offset = Yii::$app->request->post('offset');
-        $publicationsList = Publication::findPublications($limit, $offset);
-        return $publicationsList;
+        $attributes = Yii::$app->request->post();
+        $publicationsList = Publication::findPublications($attributes);
+        return [
+            'publications' => $publicationsList
+        ];
     }
 
     public function actionViewMy()
     {
-        $accessToken = Yii::$app->request->post('accessToken');
-        $limit = Yii::$app->request->post('limit');
-        $offset = Yii::$app->request->post('offset');
-        $publicationsList = Publication::findMyPublications($accessToken, $limit, $offset);
-        return $publicationsList;
+        $attributes = Yii::$app->request->post();
+        $publicationsList = Publication::findMyPublications($attributes);
+        return [
+            'publications' => $publicationsList
+        ];
     }
 
     /**
@@ -52,11 +53,8 @@ class PublicationsController extends Controller
      */
     public function actionCreate()
     {
-        $newPublication = new Publication();
-        $newPublication->attributes = Yii::$app->request->post();
-        $accessToken = Yii::$app->request->post('accessToken');
-        $newPublication->userId = User::findByAccessToken($accessToken)->id;
-        $newPublication->save();
+        $attributes = Yii::$app->request->post();
+        Publication::createPublication($attributes);
     }
 
 }

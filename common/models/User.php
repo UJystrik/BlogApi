@@ -6,6 +6,8 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
+use yii\web\BadRequestHttpException;
 use yii\web\IdentityInterface;
 
 /**
@@ -30,6 +32,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const SCENARIO_SIGNUP = 'signup';
     const SCENARIO_LOGIN = 'login';
+    const ROLE_USER = 'user';
+    const ROLE_ADMIN = 'admin';
 
 
     /**
@@ -67,8 +71,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function scenarios(){
         $scenarios = parent::scenarios();
-        $scenarios['signup'] = ['username', 'email', 'password'];
-        $scenarios['login'] = ['username', 'password'];
+        $scenarios[self::SCENARIO_SIGNUP] = ['username', 'email', 'password'];
+        $scenarios[self::SCENARIO_LOGIN] = ['username', 'password'];
         return $scenarios;
     }
 
@@ -226,6 +230,55 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function findByAccessToken($accessToken){
         return static::findOne(['id' => AccessToken::findByAccessToken($accessToken)->userId]);
+    }
+
+    public static function signupUserWidthRole($attributes, $role){
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            //createUser
+            $newUser = new User();
+            $newUser->attributes = $attributes;
+            $newUser->setPassword($attributes['password']);
+            $newUser->generateAuthKey();
+            if(!$newUser->validate()){
+                throw new Exception('The parameters are incorrect');
+            }
+            if(!$newUser->save()){
+                throw new Exception('The user is not saved');
+            }
+            //setAccessToken
+            $accessToken = new AccessToken();
+            $accessToken->setAccessToken();
+            $accessToken->userId = $newUser->getId();
+            if(!$accessToken->save()){
+                throw new Exception('The token has not been saved');
+            }
+            //addRole
+            User::setUserRole($newUser, $role);
+
+            $transaction->commit();
+        } catch (\Exception $exception){
+            $transaction->rollBack();
+            throw $exception;
+        }
+        return $accessToken->accessToken;
+    }
+
+    public static function setUserRole($user, $role){
+        $userRole = Yii::$app->authManager->getRole($role);
+        return Yii::$app->authManager->assign($userRole, $user->id);
+    }
+
+    public static function loginUser($attributes){
+        $user = User::findByUsername($attributes['username']);
+        if(!$user){
+            throw new BadRequestHttpException('Invalid login');
+        }
+        if(!$user->validatePassword($attributes['password'])){
+            throw new BadRequestHttpException('Invalid password');
+        }
+        $accessToken = $user->accessToken->getAccessToken();
+        return $accessToken;
     }
 
     /**
