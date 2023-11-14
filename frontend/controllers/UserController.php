@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use common\models\AccessToken;
 use common\models\User;
+use frontend\models\LoginForm;
+use frontend\models\SignupForm;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
@@ -29,8 +31,16 @@ class UserController extends Controller
 
     public function actionSignup()
     {
-        $attributes = Yii::$app->request->post();
-        $accessToken = User::signupUserWidthRole(Yii::$app->request->post(), User::ROLE_USER);
+        $model = new SignupForm();
+        $model->attributes = Yii::$app->request->post();
+        if($model->validate()){
+            $accessToken = $model->signupUserWidthRole(User::ROLE_USER);
+        } else {
+            return [
+                'errors' => $model->getFirstErrors()
+            ];
+        }
+
         return [
             'accessToken' => $accessToken,
         ];
@@ -38,8 +48,21 @@ class UserController extends Controller
 
     public function actionLogin()
     {
-        $attributes = Yii::$app->request->post();
-        $accessToken = User::loginUser($attributes);;
+        $model = new LoginForm();
+        $model->attributes = Yii::$app->request->post();
+        if($model->validate()){
+            $accessToken = $model->loginUser();
+            if(!$accessToken){
+                return [
+                    'errors' => $model->getFirstErrors()
+                ];
+            }
+        } else {
+            return [
+                'errors' => $model->getFirstErrors()
+            ];
+        }
+
         return [
             'accessToken' => $accessToken,
         ];

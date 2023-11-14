@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 use common\models\Publication;
 use common\models\User;
+use frontend\models\CreatePublicationForm;
+use frontend\models\PublicationsList;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -30,8 +32,9 @@ class PublicationsController extends Controller
 
     public function actionViewAll()
     {
-        $attributes = Yii::$app->request->post();
-        $publicationsList = Publication::findPublications($attributes);
+        $model = new PublicationsList();
+        $model->attributes = Yii::$app->request->post();
+        $publicationsList = $model->findPublications();
         return [
             'publications' => $publicationsList
         ];
@@ -39,8 +42,16 @@ class PublicationsController extends Controller
 
     public function actionViewMy()
     {
-        $attributes = Yii::$app->request->post();
-        $publicationsList = Publication::findMyPublications($attributes);
+        $model = new PublicationsList(['scenario' => PublicationsList::SCENARIO_VIEW_MY]);
+        $model->attributes = Yii::$app->request->post();
+        if($model->validate()){
+            $publicationsList = $model->findMyPublications();
+        } else {
+            return [
+                'errors' => $model->getFirstErrors()
+            ];
+        }
+
         return [
             'publications' => $publicationsList
         ];
@@ -53,8 +64,16 @@ class PublicationsController extends Controller
      */
     public function actionCreate()
     {
-        $attributes = Yii::$app->request->post();
-        Publication::createPublication($attributes);
+        $model = new CreatePublicationForm();
+        $model->attributes = Yii::$app->request->post();
+        if($model->validate()){
+            $model->createPublication();
+        } else {
+            return [
+              'errors' => $model->getFirstErrors()
+            ];
+        }
+
     }
 
 }

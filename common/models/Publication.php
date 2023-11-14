@@ -74,43 +74,6 @@ class Publication extends ActiveRecord
             ->all();
     }
 
-    public static function findPublications($attributes)
-    {
-        return static::find()
-            ->limit(isset($attributes['limit']) ? $attributes['limit'] : null)
-            ->offset(isset($attributes['offset']) ? $attributes['offset'] : null)
-            ->all();
-    }
-
-    public static function findMyPublications($attributes)
-    {
-        if(!isset($attributes['accessToken'])){
-            throw new Exception('Unauthorized');
-        }
-        $userId = User::findByAccessToken($attributes['accessToken'])->id;
-        return static::find()
-            ->where('userId = :id', [':id' => $userId])
-            ->limit(isset($attributes['limit']) ? $attributes['limit'] : null)
-            ->offset(isset($attributes['offset']) ? $attributes['offset'] : null)
-            ->all();
-    }
-
-    public static function createPublication($attributes){
-        if(!isset($attributes['accessToken'])){
-            throw new Exception('Unauthorized');
-        }
-        $newPublication = new Publication();
-
-        $newPublication->userId = User::findByAccessToken($attributes['accessToken'])->id;
-        $newPublication->text = $attributes['text'];
-        if(!$newPublication->validate()){
-            throw new Exception('The parameters are incorrect');
-        }
-        if(!$newPublication->save()){
-            throw new Exception('The publication is not saved');
-        }
-    }
-
     public function getId()
     {
         return $this->getPrimaryKey();

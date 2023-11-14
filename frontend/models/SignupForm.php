@@ -6,6 +6,7 @@ use common\models\AccessToken;
 use Yii;
 use yii\base\Model;
 use common\models\User;
+use yii\db\Exception;
 
 /**
  * Signup form
@@ -44,25 +45,37 @@ class SignupForm extends Model
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-    public function signup()
-    {
-        if (!$this->validate()) {
-            return null;
-        }
-        
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
+    public function signupUserWidthRole($role){
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            //createUser
+            $newUser = new User();
+            $newUser->attributes = $this->attributes;
+            $newUser->setPassword($this->password);
+            $newUser->generateAuthKey();
+            if(!$newUser->save()){
+                throw new Exception('The user is not saved');
+            }
+            //setAccessToken
+            $accessToken = new AccessToken();
+            $accessToken->setAccessToken();
+            $accessToken->userId = $newUser->getId();
+            if(!$accessToken->save()){
+                throw new Exception('The token has not been saved');
+            }
+            //addRole
+            $this->setUserRole($newUser, $role);
 
-        return $user->save() && $this->saveAccessToken($user->id);
+            $transaction->commit();
+        } catch (\Exception $exception){
+            $transaction->rollBack();
+            throw $exception;
+        }
+        return $accessToken->accessToken;
     }
 
-    protected function saveAccessToken($user_id){
-        $accessToken = new AccessToken();
-        $accessToken->user_id = $user_id;
-        $accessToken->setAccessToken();
-        $accessToken->save();
+    public function setUserRole($user, $role){
+        $userRole = Yii::$app->authManager->getRole($role);
+        return Yii::$app->authManager->assign($userRole, $user->id);
     }
 }
