@@ -1,13 +1,12 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\Publications;
 
 use common\models\Publication;
 use common\models\User;
 use yii\base\Model;
-use yii\db\Exception;
 
-class PublicationsList extends Model
+class PublicationsListForm extends Model
 {
     public $accessToken;
     public $limit;

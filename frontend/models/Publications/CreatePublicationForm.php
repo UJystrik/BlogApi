@@ -1,11 +1,10 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\Publications;
 
 use common\models\Publication;
-use Yii;
-use yii\base\Model;
 use common\models\User;
+use yii\base\Model;
 use yii\db\Exception;
 
 class CreatePublicationForm extends Model
@@ -24,7 +23,7 @@ class CreatePublicationForm extends Model
                 'message' => 'User not found'
             ],
             ['text', 'required'],
-            ['text', 'string', 'max' => 400],
+            ['text', 'string', 'max' => Publication::MAX_TEXT_LENGTH],
         ];
     }
 

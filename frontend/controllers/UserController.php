@@ -2,14 +2,11 @@
 
 namespace frontend\controllers;
 
-use common\models\AccessToken;
 use common\models\User;
-use frontend\models\LoginForm;
-use frontend\models\SignupForm;
+use frontend\models\Authorization\LoginForm;
+use frontend\models\Authorization\SignupForm;
 use Yii;
-use yii\filters\VerbFilter;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
+use yii\base\Controller;
 
 class UserController extends Controller
 {

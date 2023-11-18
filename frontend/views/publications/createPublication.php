@@ -2,11 +2,10 @@
 
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
-/** @var \frontend\models\CreatePublicationForm $model */
+/** @var \frontend\models\Publications\CreatePublicationForm $model */
 
-use common\models\User;
-use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\bootstrap5\Html;
 
 $this->title = 'Новая публикация';
 $this->params['breadcrumbs'][] = $this->title;

@@ -1,11 +1,11 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\Authorization;
 
 use common\models\AccessToken;
+use common\models\User;
 use Yii;
 use yii\base\Model;
-use common\models\User;
 use yii\db\Exception;
 
 /**

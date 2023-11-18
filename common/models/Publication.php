@@ -22,6 +22,7 @@ class Publication extends ActiveRecord
     const SCENARIO_CREATE = 'create';
     const SCENARIO_VIEW_ALL = 'view-all';
     const SCENARIO_VIEW_MY = 'view-my';
+    const MAX_TEXT_LENGTH = 400;
     /**
      * {@inheritdoc}
      */
@@ -62,9 +63,9 @@ class Publication extends ActiveRecord
         return static::findOne(['id' => $id]);
     }
 
-    public static function findByUserId($user_id)
+    public static function findByUserId($userId)
     {
-        return static::findOne(['userId' => $user_id]);
+        return static::findOne(['userId' => $userId]);
     }
 
     public static function findAllPublications()

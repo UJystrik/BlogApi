@@ -1,12 +1,10 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\Authorization;
 
 use common\models\User;
 use Yii;
 use yii\base\Model;
-use yii\db\Exception;
-use yii\web\BadRequestHttpException;
 
 class LoginForm extends Model
 {
