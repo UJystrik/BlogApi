@@ -13,6 +13,7 @@ class LoginForm extends Model
     public $username;
     public $password;
 
+    private $_accessToken;
     public function rules()
     {
         return [
@@ -34,9 +35,24 @@ class LoginForm extends Model
             $this->addError('password','Invalid password');
             return false;
         }
-        $accessToken = $user->accessToken->getAccessToken();
-        return $accessToken;
+        $this->_accessToken = $user->accessToken;
+        if(!$this->_accessToken){
+            return false;
+        }
+        return true;
     }
 
+    public function serializeResponse()
+    {
+        return [
+            'accessToken' => $this->_accessToken->serializeForArrayShort()
+        ];
+    }
+
+    public function errorResponse(){
+        return [
+            'errors' => $this->getFirstErrors()
+        ];
+    }
 
 }

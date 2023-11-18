@@ -17,6 +17,7 @@ class SignupForm extends Model
     public $email;
     public $password;
 
+    private $_accessToken;
 
     /**
      * {@inheritdoc}
@@ -57,10 +58,10 @@ class SignupForm extends Model
                 throw new Exception('The user is not saved');
             }
             //setAccessToken
-            $accessToken = new AccessToken();
-            $accessToken->setAccessToken();
-            $accessToken->userId = $newUser->getId();
-            if(!$accessToken->save()){
+            $this->_accessToken = new AccessToken();
+            $this->_accessToken->setAccessToken();
+            $this->_accessToken->userId = $newUser->getId();
+            if(!$this->_accessToken->save()){
                 throw new Exception('The token has not been saved');
             }
             //addRole
@@ -69,13 +70,26 @@ class SignupForm extends Model
             $transaction->commit();
         } catch (\Exception $exception){
             $transaction->rollBack();
+            $this->_accessToken = null;
             throw $exception;
         }
-        return $accessToken->accessToken;
     }
 
     public function setUserRole($user, $role){
         $userRole = Yii::$app->authManager->getRole($role);
         return Yii::$app->authManager->assign($userRole, $user->id);
+    }
+
+    public function serializeResponse()
+    {
+        return [
+            'accessToken' => $this->_accessToken->serializeForArrayShort()
+        ];
+    }
+
+    public function errorResponse(){
+        return [
+            'errors' => $this->getFirstErrors()
+        ];
     }
 }

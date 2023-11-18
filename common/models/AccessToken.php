@@ -45,6 +45,14 @@ class AccessToken extends ActiveRecord
         return static::findOne(['accessToken' => $accessToken]);
     }
 
+    public function serializeForArrayShort(){
+        $data = [];
+
+        $data['token'] = $this->accessToken;
+
+        return $data;
+    }
+
     public function getUser(){
         return $this->hasOne(User::class, ['id' => 'userId']);
     }

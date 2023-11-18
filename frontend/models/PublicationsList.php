@@ -12,6 +12,8 @@ class PublicationsList extends Model
     public $accessToken;
     public $limit;
     public $offset;
+
+    private $_publications;
     const SCENARIO_VIEW_MY = 'view-my';
 
     public function rules()
@@ -37,7 +39,7 @@ class PublicationsList extends Model
     public function findMyPublications()
     {
         $userId = User::findByAccessToken($this->accessToken)->id;
-        return Publication::find()
+        $this->_publications = Publication::find()
             ->where('userId = :id', [':id' => $userId])
             ->limit($this->limit)
             ->offset($this->offset)
@@ -46,9 +48,28 @@ class PublicationsList extends Model
 
     public function findPublications()
     {
-        return Publication::find()
+        $this->_publications = Publication::find()
             ->limit($this->limit)
             ->offset($this->offset)
             ->all();
+    }
+
+    public function serializeResponse()
+    {
+        $result = [];
+
+        foreach ($this->_publications as $publication) {
+            array_push( $result, $publication->serializeForArrayShort());
+        }
+
+        return [
+            'publications' => $result
+        ];
+    }
+
+    public function errorResponse(){
+        return [
+            'errors' => $this->getFirstErrors()
+        ];
     }
 }

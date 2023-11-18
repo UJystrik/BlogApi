@@ -13,6 +13,8 @@ class CreatePublicationForm extends Model
     public $accessToken;
     public $text;
 
+    private $_newPublication;
+
     public function rules()
     {
         return [
@@ -27,12 +29,25 @@ class CreatePublicationForm extends Model
     }
 
     public function createPublication(){
-        $newPublication = new Publication();
+        $this->_newPublication = new Publication();
 
-        $newPublication->userId = User::findByAccessToken($this->accessToken)->id;
-        $newPublication->text = $this->text;
-        if(!$newPublication->save()){
+        $this->_newPublication->userId = User::findByAccessToken($this->accessToken)->id;
+        $this->_newPublication->text = $this->text;
+        if(!$this->_newPublication->save()){
             throw new Exception('The publication is not saved');
         }
+    }
+
+    public function serializeResponse()
+    {
+        return [
+            'publication' => $this->_newPublication->serializeForArrayShort()
+        ];
+    }
+
+    public function errorResponse(){
+        return [
+            'errors' => $this->getFirstErrors()
+        ];
     }
 }

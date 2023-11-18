@@ -79,6 +79,24 @@ class Publication extends ActiveRecord
         return $this->getPrimaryKey();
     }
 
+    public function serializeForArrayShort(){
+        $data = [];
+
+        $data['id'] = $this->id;
+        $data['text'] = $this->text;
+
+        return $data;
+    }
+
+    public function serializeForArray(){
+        $data = $this->serializeForArrayShort();
+
+        $data['createdAt'] = $this->createdAt;
+        $data['updatedAt'] = $this->updatedAt;
+
+        return $data;
+    }
+
     /**
      * Связь с таблицей User
      */

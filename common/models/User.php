@@ -231,6 +231,15 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByAccessToken($accessToken){
         return static::findOne(['id' => AccessToken::findByAccessToken($accessToken)->userId]);
     }
+    public function serializeForArrayShort(){
+        $data = [];
+
+        $data['id'] = $this->id;
+        $data['username'] = $this->username;
+
+        return $data;
+    }
+
 
     /**
      * Связь с таблицей Publication

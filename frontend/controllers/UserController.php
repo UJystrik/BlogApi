@@ -33,39 +33,25 @@ class UserController extends Controller
     {
         $model = new SignupForm();
         $model->attributes = Yii::$app->request->post();
-        if($model->validate()){
-            $accessToken = $model->signupUserWidthRole(User::ROLE_USER);
-        } else {
-            return [
-                'errors' => $model->getFirstErrors()
-            ];
+        if(!$model->validate()){
+            return $model->errorResponse();
         }
+        $model->signupUserWidthRole(User::ROLE_USER);
 
-        return [
-            'accessToken' => $accessToken,
-        ];
+        return $model->serializeResponse();
     }
 
     public function actionLogin()
     {
         $model = new LoginForm();
         $model->attributes = Yii::$app->request->post();
-        if($model->validate()){
-            $accessToken = $model->loginUser();
-            if(!$accessToken){
-                return [
-                    'errors' => $model->getFirstErrors()
-                ];
-            }
-        } else {
-            return [
-                'errors' => $model->getFirstErrors()
-            ];
+        if(!$model->validate()){
+            return $model->errorResponse();
         }
-
-        return [
-            'accessToken' => $accessToken,
-        ];
+        if(!$model->loginUser()){
+            return $model->errorResponse();
+        }
+        return $model->serializeResponse();
     }
 
 }
