@@ -25,6 +25,13 @@ class PublicationComment extends ActiveRecord
         return '{{%comment_publication}}';
     }
 
+    public function rules()
+    {
+        return [
+            [['publicationId', 'userId', 'text'], 'required'],
+        ];
+    }
+
     public function behaviors()
     {
         return [
@@ -54,6 +61,14 @@ class PublicationComment extends ActiveRecord
         $data['text'] = $this->text;
 
         return $data;
+    }
+
+    /**
+     * Связь с таблицей Publication
+     */
+    public function getPublication()
+    {
+        return $this->hasOne(Publication::class, ['id' => 'publicationId']);
     }
 
 }

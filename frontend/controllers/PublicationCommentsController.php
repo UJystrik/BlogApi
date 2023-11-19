@@ -21,6 +21,8 @@ class PublicationCommentsController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'create' => ['POST'],
+                    'delete' => ['POST'],
+                    'view' => ['GET'],
                 ],
             ],
         ];

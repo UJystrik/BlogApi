@@ -106,4 +106,12 @@ class Publication extends ActiveRecord
         return $this->hasOne(User::class, ['id' => 'userId']);
     }
 
+    /**
+     * Связь с таблицей PublicationComment
+     */
+    public function getPublicationComments()
+    {
+        return $this->hasMany(PublicationComment::class, ['publicationId' => 'id']);
+    }
+
 }

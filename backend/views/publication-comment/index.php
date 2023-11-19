@@ -1,49 +1,27 @@
 <?php
 
 use backend\models\PublicationCommentCRUD;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
-use yii\helpers\Html;
-use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var backend\models\PublicationCRUD $model */
 /** @var backend\models\PublicationCommentAllSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Publication Cruds', 'url' => ['index']];
+$this->title = 'Publication Comment Cruds';
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
-<div class="publication-crud-view">
+<div class="publication-comment-crud-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Create Publication Comment Crud', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'userId',
-            'text',
-            'createdAt',
-            'updatedAt',
-        ],
-    ]) ?>
-
-    <h2>Комментарии</h2>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -61,9 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, PublicationCommentCRUD $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                }
+                 }
             ],
         ],
     ]); ?>
+
 
 </div>
