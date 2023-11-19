@@ -76,7 +76,7 @@ class PublicationCommentController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($publicationId = false)
     {
         $model = new PublicationCommentCRUD();
 
@@ -86,6 +86,10 @@ class PublicationCommentController extends Controller
             }
         } else {
             $model->loadDefaultValues();
+        }
+
+        if($publicationId){
+            $model->publicationId = $publicationId;
         }
 
         return $this->render('create', [

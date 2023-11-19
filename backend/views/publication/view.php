@@ -45,6 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h2>Комментарии</h2>
 
+    <p>
+        <?= Html::a('Create Publication Comment Crud', ['publication-comment/create', 'publicationId' => $model->id], ['class' => 'btn btn-success']) ?>
+    </p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
