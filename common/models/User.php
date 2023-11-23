@@ -228,10 +228,13 @@ class User extends ActiveRecord implements IdentityInterface
         $this->passwordResetToken = null;
     }
 
-    public static function findByAccessToken($accessToken){
+    public static function findByAccessToken($accessToken)
+    {
         return static::findOne(['id' => AccessToken::findByAccessToken($accessToken)->userId]);
     }
-    public function serializeForArrayShort(){
+    
+    public function serializeForArrayShort()
+    {
         $data = [];
 
         $data['id'] = $this->id;
@@ -249,7 +252,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Publication::class, ['userId' => 'id']);
     }
 
-    public function getAccessToken(){
+    /**
+     * Связь с таблицей AccessToken
+     */
+    public function getAccessToken()
+    {
         return $this->hasOne(AccessToken::class, ['userId' => 'id']);
     }
 }
