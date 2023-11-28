@@ -33,6 +33,9 @@ class PublicationsController extends Controller
     {
         $model = new PublicationsListForm();
         $model->attributes = Yii::$app->request->post();
+        if(!$model->validate()){
+            return $model->errorResponse();
+        }
         $model->findPublications();
         return $model->serializeShortResponse();
     }

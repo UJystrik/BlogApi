@@ -24,6 +24,8 @@ class PublicationCommentListForm extends Model
             ],
             ['limit', 'integer'],
             ['offset', 'integer'],
+            ['limit', 'default' => \Yii::$app->params['publicationComment.limit']],
+            ['offset', 'default' => \Yii::$app->params['publicationComment.offset']],
         ];
     }
 

@@ -20,6 +20,8 @@ class PublicationsListForm extends Model
         return [
             ['limit', 'integer'],
             ['offset', 'integer'],
+            ['limit', 'default', 'value' => \Yii::$app->params['publication.limit']],
+            ['offset', 'default', 'value' => \Yii::$app->params['publication.offset']],
             ['accessToken', 'required', 'on' => self::SCENARIO_VIEW_MY, 'message' => 'Unauthorized'],
             ['accessToken', 'exist',
                 'on' => self::SCENARIO_VIEW_MY,
