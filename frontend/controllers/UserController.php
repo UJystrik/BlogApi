@@ -35,7 +35,7 @@ class UserController extends Controller
         }
         $model->signupUserWidthRole(User::ROLE_USER);
 
-        return $model->serializeResponse();
+        return $model->serializeShortResponse();
     }
 
     public function actionLogin()
@@ -48,7 +48,7 @@ class UserController extends Controller
         if(!$model->loginUser()){
             return $model->errorResponse();
         }
-        return $model->serializeResponse();
+        return $model->serializeShortResponse();
     }
 
 }

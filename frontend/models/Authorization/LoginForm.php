@@ -40,7 +40,7 @@ class LoginForm extends Model
         return true;
     }
 
-    public function serializeResponse()
+    public function serializeShortResponse()
     {
         return [
             'accessToken' => $this->_accessToken->serializeForArrayShort()

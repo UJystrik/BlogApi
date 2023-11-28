@@ -36,7 +36,7 @@ class PublicationCommentsController extends Controller
             return $model->errorResponse();
         }
         $model->createComment();
-        return $model->serializeResponse();
+        return $model->serializeShortResponse();
     }
 
     public function actionDelete(){
@@ -48,7 +48,7 @@ class PublicationCommentsController extends Controller
         if(!$model->deleteComment()){
             return $model->errorResponse();
         }
-        return $model->serializeResponse();
+        return $model->serializeShortResponse();
     }
 
     public function actionView()
@@ -59,7 +59,7 @@ class PublicationCommentsController extends Controller
             return $model->errorResponse();
         }
         $model->findPublicationComments();
-        return $model->serializeResponse();
+        return $model->serializeShortResponse();
     }
 
 }

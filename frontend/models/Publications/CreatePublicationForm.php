@@ -37,10 +37,17 @@ class CreatePublicationForm extends Model
         }
     }
 
-    public function serializeResponse()
+    public function serializeShortResponse()
     {
         return [
             'publication' => $this->_newPublication->serializeForArrayShort()
+        ];
+    }
+
+    public function serializeFullResponse()
+    {
+        return [
+            'publication' => $this->_newPublication->serializeForArrayFull()
         ];
     }
 

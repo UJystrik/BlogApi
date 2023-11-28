@@ -34,7 +34,7 @@ class PublicationsController extends Controller
         $model = new PublicationsListForm();
         $model->attributes = Yii::$app->request->post();
         $model->findPublications();
-        return $model->serializeResponse();
+        return $model->serializeShortResponse();
     }
 
     public function actionViewMy()
@@ -45,7 +45,7 @@ class PublicationsController extends Controller
             return $model->errorResponse();
         }
         $model->findMyPublications();
-        return $model->serializeResponse();
+        return $model->serializeShortResponse();
     }
 
     /**
@@ -61,7 +61,7 @@ class PublicationsController extends Controller
             return $model->errorResponse();
         }
         $model->createPublication();
-        return $model->serializeResponse();
+        return $model->serializeShortResponse();
     }
 
 }

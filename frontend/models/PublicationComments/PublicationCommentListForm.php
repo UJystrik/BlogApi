@@ -30,17 +30,30 @@ class PublicationCommentListForm extends Model
     public function findPublicationComments()
     {
         $this->_comments = PublicationComment::find()
+            ->where('publicationId=:publicationId', [':publicationId' => $this->publicationId])
             ->limit($this->limit)
-            ->offset($this->offset)
-            ->all();
+            ->offset($this->offset);
     }
 
-    public function serializeResponse()
+    public function serializeShortResponse()
     {
         $result = [];
 
-        foreach ($this->_comments as $comment) {
-            array_push( $result, $comment->serializeForArrayShort());
+        foreach ($this->_comments->each() as $comment) {
+            $result[] = $comment->serializeForArrayShort();
+        }
+
+        return [
+            'comments' => $result
+        ];
+    }
+
+    public function serializeFullResponse()
+    {
+        $result = [];
+
+        foreach ($this->_comments->each() as $comment) {
+            $result[] = $comment->serializeForArrayFull();
         }
 
         return [

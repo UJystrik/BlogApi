@@ -82,10 +82,10 @@ class Publication extends BasePublication
         return $data;
     }
 
-    public function serializeForArray()
+    public function serializeForArrayFull()
     {
         $data = $this->serializeForArrayShort();
-
+        $data['userId'] = $this->userId;
         $data['createdAt'] = $this->createdAt;
         $data['updatedAt'] = $this->updatedAt;
 

@@ -75,12 +75,12 @@ class SignupForm extends Model
         }
     }
 
-    public function setUserRole($user, $role){
+    private function setUserRole($user, $role){
         $userRole = Yii::$app->authManager->getRole($role);
         return Yii::$app->authManager->assign($userRole, $user->id);
     }
 
-    public function serializeResponse()
+    public function serializeShortResponse()
     {
         return [
             'accessToken' => $this->_accessToken->serializeForArrayShort()

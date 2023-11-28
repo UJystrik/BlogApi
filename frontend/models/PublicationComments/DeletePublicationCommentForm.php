@@ -11,7 +11,6 @@ class DeletePublicationCommentForm extends Model
 {
     public $accessToken;
     public $commentId;
-
     private $_comment;
     public function rules()
     {
@@ -27,10 +26,12 @@ class DeletePublicationCommentForm extends Model
         ];
     }
 
-    private function checkAccess(){
+    private function checkAccess()
+    {
         return $this->_comment->userId === User::findByAccessToken($this->accessToken)->id;
     }
-    public function deleteComment(){
+    public function deleteComment()
+    {
         $this->_comment = PublicationComment::findIdentity($this->commentId);
         if(!$this->_comment){
             $this->addError('comment', 'Comment not found');
@@ -46,14 +47,22 @@ class DeletePublicationCommentForm extends Model
         return true;
     }
 
-    public function serializeResponse()
+    public function serializeShortResponse()
     {
         return [
             'comment' => $this->_comment->serializeForArrayShort()
         ];
     }
+    public function serializeFullResponse()
+    {
+        return [
+            'comment' => $this->_comment->serializeForArrayFull()
+        ];
+    }
 
-    public function errorResponse(){
+
+    public function errorResponse()
+    {
         return [
             'errors' => $this->getFirstErrors()
         ];

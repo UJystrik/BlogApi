@@ -47,10 +47,17 @@ class CreatePublicationCommentForm extends Model
         }
     }
 
-    public function serializeResponse()
+    public function serializeShortResponse()
     {
         return [
             'comment' => $this->_newComment->serializeForArrayShort()
+        ];
+    }
+
+    public function serializeFullResponse()
+    {
+        return [
+            'comment' => $this->_newComment->serializeForArrayFull()
         ];
     }
 

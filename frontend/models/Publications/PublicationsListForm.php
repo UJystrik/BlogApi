@@ -41,24 +41,35 @@ class PublicationsListForm extends Model
         $this->_publications = Publication::find()
             ->where('userId = :id', [':id' => $userId])
             ->limit($this->limit)
-            ->offset($this->offset)
-            ->all();
+            ->offset($this->offset);
     }
 
     public function findPublications()
     {
         $this->_publications = Publication::find()
             ->limit($this->limit)
-            ->offset($this->offset)
-            ->all();
+            ->offset($this->offset);
     }
 
-    public function serializeResponse()
+    public function serializeShortResponse()
     {
         $result = [];
 
-        foreach ($this->_publications as $publication) {
-            array_push( $result, $publication->serializeForArrayShort());
+        foreach ($this->_publications->each() as $publication) {
+            $result[] = $publication->serializeForArrayShort();
+        }
+
+        return [
+            'publications' => $result
+        ];
+    }
+
+    public function serializeFullResponse()
+    {
+        $result = [];
+
+        foreach ($this->_publications->each() as $publication) {
+            $result[] = $publication->serializeForArrayFull();
         }
 
         return [

@@ -57,4 +57,17 @@ class PublicationComment extends BasePublicationComment
 
         return $data;
     }
+
+    public function serializeForArrayFull()
+    {
+        $data = $this->serializeForArrayShort();
+
+        $data['publicationId'] = $this->publicationId;
+        $data['userId'] = $this->userId;
+        $data['createdAt'] = $this->createdAt;
+        $data['updatedAt'] = $this->updatedAt;
+
+        return $data;
+    }
+
 }
