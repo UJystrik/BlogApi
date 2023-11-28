@@ -2,8 +2,8 @@
 
 namespace frontend\models\Publications;
 
-use common\models\Publication;
-use common\models\User;
+use common\models\BackendModels\Publication;
+use common\models\BackendModels\User;
 use yii\base\Model;
 
 class PublicationsListForm extends Model
@@ -23,7 +23,7 @@ class PublicationsListForm extends Model
             ['accessToken', 'required', 'on' => self::SCENARIO_VIEW_MY, 'message' => 'Unauthorized'],
             ['accessToken', 'exist',
                 'on' => self::SCENARIO_VIEW_MY,
-                'targetClass' => '\common\models\AccessToken',
+                'targetClass' => '\common\models\BackendModels\AccessToken',
                 'message' => 'User not found'
             ],
         ];

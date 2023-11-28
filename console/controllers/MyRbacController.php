@@ -2,9 +2,10 @@
 
 namespace console\controllers;
 
-use common\models\User;
+use common\models\BackendModels\User;
 use Yii;
 use yii\console\Controller;
+
 /**
 * Инициализатор RBAC выполняется в консоли php yii my-rbac/init
 */

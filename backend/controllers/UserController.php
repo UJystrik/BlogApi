@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\BaseUser;
 use app\models\UserSearch;
+use common\models\BaseModels\BaseUser;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * UserController implements the CRUD actions for BaseUser model.

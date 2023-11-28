@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\BasePublication $model */
+/** @var \common\models\BaseModels\BasePublication $model */
 
 $this->title = 'Update Base Publication: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Base Publications', 'url' => ['index']];

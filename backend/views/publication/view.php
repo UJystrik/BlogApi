@@ -1,11 +1,13 @@
 <?php
 
-use yii\grid\ActionColumn;use yii\grid\GridView;use yii\helpers\Html;
-use yii\helpers\Url;use yii\widgets\DetailView;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\BasePublication $model */
-/** @var common\models\BasePublicationComment $modelComment */
+/** @var \common\models\BaseModels\BasePublication $model */
+/** @var \common\models\BaseModels\BasePublicationComment $modelComment */
 /** @var app\models\PublicationCommentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 

@@ -2,7 +2,7 @@
 
 namespace frontend\models\PublicationComments;
 
-use common\models\PublicationComment;
+use common\models\BackendModels\PublicationComment;
 use yii\base\Model;
 
 class PublicationCommentListForm extends Model
@@ -18,7 +18,7 @@ class PublicationCommentListForm extends Model
         return [
             ['publicationId', 'required'],
             ['publicationId', 'exist',
-                'targetClass' => '\common\models\Publication',
+                'targetClass' => '\common\models\BackendModels\Publication',
                 'targetAttribute' => 'id',
                 'message' => 'Publication not found'
             ],

@@ -1,10 +1,10 @@
 <?php
 
-use common\models\BasePublicationComment;
-use yii\helpers\Html;
-use yii\helpers\Url;
+use common\models\BaseModels\BasePublicationComment;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var app\models\PublicationCommentAllSearch $searchModel */

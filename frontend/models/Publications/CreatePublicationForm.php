@@ -2,8 +2,8 @@
 
 namespace frontend\models\Publications;
 
-use common\models\Publication;
-use common\models\User;
+use common\models\BackendModels\Publication;
+use common\models\BackendModels\User;
 use yii\base\Model;
 use yii\db\Exception;
 
@@ -19,7 +19,7 @@ class CreatePublicationForm extends Model
         return [
             ['accessToken', 'required', 'message' => 'Unauthorized'],
             ['accessToken', 'exist',
-                'targetClass' => '\common\models\AccessToken',
+                'targetClass' => '\common\models\BackendModels\AccessToken',
                 'message' => 'User not found'
             ],
             ['text', 'required'],

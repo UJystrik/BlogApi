@@ -2,8 +2,8 @@
 
 namespace frontend\models\PublicationComments;
 
-use common\models\PublicationComment;
-use common\models\User;
+use common\models\BackendModels\PublicationComment;
+use common\models\BackendModels\User;
 use yii\base\Model;
 use yii\db\Exception;
 
@@ -18,7 +18,7 @@ class DeletePublicationCommentForm extends Model
         return [
             ['accessToken', 'required', 'message' => 'Unauthorized'],
             ['accessToken', 'exist',
-                'targetClass' => '\common\models\AccessToken',
+                'targetClass' => '\common\models\BackendModels\AccessToken',
                 'targetAttribute' => 'accessToken',
                 'message' => 'User not found'
             ],

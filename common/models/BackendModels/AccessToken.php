@@ -1,9 +1,9 @@
 <?php
 
-namespace common\models;
+namespace common\models\BackendModels;
 
+use common\models\BaseModels\BaseAccessToken;
 use Yii;
-use yii\db\ActiveRecord;
 
 /**
  * Access Token model

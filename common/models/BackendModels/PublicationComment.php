@@ -1,9 +1,9 @@
 <?php
 
-namespace common\models;
+namespace common\models\BackendModels;
 
+use common\models\BaseModels\BasePublicationComment;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
 /**
  * Publication model

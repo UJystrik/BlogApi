@@ -1,8 +1,9 @@
 <?php
 
-namespace common\models;
+namespace common\models\BaseModels;
 
-use Yii;
+use common\models\BackendModels\Publication;
+use common\models\BackendModels\User;
 
 /**
  * This is the model class for table "comment_publication".

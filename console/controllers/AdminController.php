@@ -2,8 +2,8 @@
 
 namespace console\controllers;
 
-use common\models\AccessToken;
-use common\models\User;
+use common\models\BackendModels\AccessToken;
+use common\models\BackendModels\User;
 use Yii;
 use yii\console\Controller;
 use yii\db\Exception;

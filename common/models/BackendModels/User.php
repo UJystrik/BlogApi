@@ -1,13 +1,11 @@
 <?php
 
-namespace common\models;
+namespace common\models\BackendModels;
 
+use common\models\BaseModels\BaseUser;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\db\Exception;
-use yii\web\BadRequestHttpException;
 use yii\web\IdentityInterface;
 
 /**

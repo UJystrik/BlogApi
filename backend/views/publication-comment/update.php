@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\BasePublicationComment $model */
+/** @var \common\models\BaseModels\BasePublicationComment $model */
 
 $this->title = 'Update Base Publication Comment: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Base Publication Comments', 'url' => ['index']];

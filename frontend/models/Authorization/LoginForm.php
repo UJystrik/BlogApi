@@ -2,7 +2,7 @@
 
 namespace frontend\models\Authorization;
 
-use common\models\User;
+use common\models\BackendModels\User;
 use Yii;
 use yii\base\Model;
 

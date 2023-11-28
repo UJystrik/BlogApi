@@ -1,8 +1,8 @@
 <?php
 
-namespace common\models;
+namespace common\models\BackendModels;
 
-use Yii;
+use common\models\BaseModels\BasePublication;
 use yii\behaviors\TimestampBehavior;
 
 /**

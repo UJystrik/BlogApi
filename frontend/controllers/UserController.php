@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\User;
+use common\models\BackendModels\User;
 use frontend\models\Authorization\LoginForm;
 use frontend\models\Authorization\SignupForm;
 use Yii;

@@ -2,13 +2,13 @@
 
 namespace backend\controllers;
 
-use common\models\BasePublication;
-use app\models\PublicationSearch;
 use app\models\PublicationCommentSearch;
+use app\models\PublicationSearch;
+use common\models\BaseModels\BasePublication;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * PublicationController implements the CRUD actions for BasePublication model.

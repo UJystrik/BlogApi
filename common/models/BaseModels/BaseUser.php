@@ -1,8 +1,10 @@
 <?php
 
-namespace common\models;
+namespace common\models\BaseModels;
 
-use Yii;
+use common\models\BackendModels\AccessToken;
+use common\models\BackendModels\Publication;
+use common\models\CommentPublication;
 
 /**
  * This is the model class for table "user".
