@@ -2,17 +2,18 @@
 
 namespace backend\controllers;
 
-use common\models\BaseUser;
-use app\models\UserSearch;
+use common\models\BasePublication;
+use app\models\PublicationSearch;
+use app\models\PublicationCommentSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for BaseUser model.
+ * PublicationController implements the CRUD actions for BasePublication model.
  */
-class UserController extends Controller
+class PublicationController extends Controller
 {
     /**
      * @inheritDoc
@@ -43,13 +44,13 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all BaseUser models.
+     * Lists all BasePublication models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new PublicationSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -59,26 +60,31 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a single BaseUser model.
+     * Displays a single BasePublication model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
+        $searchModel = new PublicationCommentSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams + ['publicationId'=>$id]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Creates a new BaseUser model.
+     * Creates a new BasePublication model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new BaseUser();
+        $model = new BasePublication();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -94,7 +100,7 @@ class UserController extends Controller
     }
 
     /**
-     * Updates an existing BaseUser model.
+     * Updates an existing BasePublication model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -114,7 +120,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes an existing BaseUser model.
+     * Deletes an existing BasePublication model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -128,15 +134,15 @@ class UserController extends Controller
     }
 
     /**
-     * Finds the BaseUser model based on its primary key value.
+     * Finds the BasePublication model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return BaseUser the loaded model
+     * @return BasePublication the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BaseUser::findOne(['id' => $id])) !== null) {
+        if (($model = BasePublication::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

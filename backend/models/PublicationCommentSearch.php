@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\BaseUser;
+use common\models\BasePublicationComment;
 
 /**
- * User represents the model behind the search form of `common\models\BaseUser`.
+ * PublicationCommentAllSearch represents the model behind the search form of `common\models\BasePublicationComment`.
  */
-class User extends BaseUser
+class PublicationCommentSearch extends BasePublicationComment
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class User extends BaseUser
     public function rules()
     {
         return [
-            [['id', 'status', 'createdAt', 'updatedAt'], 'integer'],
-            [['username', 'authKey', 'passwordHash', 'passwordResetToken', 'email', 'verificationToken'], 'safe'],
+            [['id', 'publicationId', 'userId', 'createdAt', 'updatedAt'], 'integer'],
+            [['text'], 'safe'],
         ];
     }
 
@@ -40,7 +40,8 @@ class User extends BaseUser
      */
     public function search($params)
     {
-        $query = BaseUser::find();
+        $query = BasePublicationComment::find()
+            ->where(['publicationId' => $params['publicationId']]);
 
         // add conditions that should always apply here
 
@@ -59,17 +60,13 @@ class User extends BaseUser
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
+            'publicationId' => $this->publicationId,
+            'userId' => $this->userId,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ]);
 
-        $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'authKey', $this->authKey])
-            ->andFilterWhere(['like', 'passwordHash', $this->passwordHash])
-            ->andFilterWhere(['like', 'passwordResetToken', $this->passwordResetToken])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'verificationToken', $this->verificationToken]);
+        $query->andFilterWhere(['like', 'text', $this->text]);
 
         return $dataProvider;
     }

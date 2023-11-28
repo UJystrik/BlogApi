@@ -2,17 +2,17 @@
 
 namespace backend\controllers;
 
-use common\models\BaseUser;
-use app\models\UserSearch;
+use common\models\BasePublicationComment;
+use app\models\PublicationCommentAllSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for BaseUser model.
+ * PublicationCommentController implements the CRUD actions for BasePublicationComment model.
  */
-class UserController extends Controller
+class PublicationCommentController extends Controller
 {
     /**
      * @inheritDoc
@@ -43,13 +43,13 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all BaseUser models.
+     * Lists all BasePublicationComment models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new PublicationCommentAllSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -59,7 +59,7 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a single BaseUser model.
+     * Displays a single BasePublicationComment model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -72,13 +72,13 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new BaseUser model.
+     * Creates a new BasePublicationComment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new BaseUser();
+        $model = new BasePublicationComment();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -94,7 +94,7 @@ class UserController extends Controller
     }
 
     /**
-     * Updates an existing BaseUser model.
+     * Updates an existing BasePublicationComment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -114,7 +114,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes an existing BaseUser model.
+     * Deletes an existing BasePublicationComment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -128,15 +128,15 @@ class UserController extends Controller
     }
 
     /**
-     * Finds the BaseUser model based on its primary key value.
+     * Finds the BasePublicationComment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return BaseUser the loaded model
+     * @return BasePublicationComment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BaseUser::findOne(['id' => $id])) !== null) {
+        if (($model = BasePublicationComment::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
