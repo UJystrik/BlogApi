@@ -18,7 +18,6 @@ use yii\behaviors\TimestampBehavior;
 
 class PublicationComment extends BasePublicationComment
 {
-    const MAX_LENGTH_COMMENT_TEXT = 200;
     public function rules()
     {
         return [

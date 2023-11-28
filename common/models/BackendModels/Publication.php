@@ -20,7 +20,6 @@ class Publication extends BasePublication
     const SCENARIO_CREATE = 'create';
     const SCENARIO_VIEW_ALL = 'view-all';
     const SCENARIO_VIEW_MY = 'view-my';
-    const MAX_TEXT_LENGTH = 400;
 
     public function rules()
     {

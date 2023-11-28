@@ -10,4 +10,8 @@ return [
     'publicationComment.offset' => 0,
     'publication.limit' => 20,
     'publication.offset' => 0,
+    'publication.maxLength' => 400,
+    'publicationComment.maxLength' => 200,
+    'user.roleAdmin' => 'admin',
+    'user.roleUser' => 'user',
 ];

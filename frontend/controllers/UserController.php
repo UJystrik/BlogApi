@@ -33,7 +33,7 @@ class UserController extends Controller
         if(!$model->validate()){
             return $model->errorResponse();
         }
-        $model->signupUserWidthRole(User::ROLE_USER);
+        $model->signupUserWidthRole(\Yii::$app->params['user.roleUser']);
 
         return $model->serializeShortResponse();
     }

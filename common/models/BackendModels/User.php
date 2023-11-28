@@ -26,12 +26,10 @@ use yii\web\IdentityInterface;
 class User extends BaseUser implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 10; //default=9
+    const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
     const SCENARIO_SIGNUP = 'signup';
     const SCENARIO_LOGIN = 'login';
-    const ROLE_USER = 'user';
-    const ROLE_ADMIN = 'admin';
 
     /**
      * {@inheritdoc}
@@ -49,7 +47,7 @@ class User extends BaseUser implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             [['username', 'passwordHash', 'email'], 'required'],
             [['username', 'email'], 'unique'],

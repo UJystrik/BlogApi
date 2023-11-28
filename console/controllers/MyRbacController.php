@@ -2,7 +2,7 @@
 
 namespace console\controllers;
 
-use common\models\BackendModels\User;
+use Exception;
 use Yii;
 use yii\console\Controller;
 
@@ -12,6 +12,9 @@ use yii\console\Controller;
 class MyRbacController extends Controller {
 
     #php yii my-rbac/init
+    /**
+     * @throws Exception
+     */
     public function actionInit()
     {
         $auth = Yii::$app->authManager;
@@ -19,8 +22,8 @@ class MyRbacController extends Controller {
         $auth->removeAll(); //На всякий случай удаляем старые данные из БД...
 
         // Создадим роли админа и редактора новостей
-        $admin = $auth->createRole(User::ROLE_ADMIN);
-        $editor = $auth->createRole(User::ROLE_USER);
+        $admin = $auth->createRole(\Yii::$app->params['user.roleAdmin']);
+        $editor = $auth->createRole(\Yii::$app->params['user.roleUser']);
 
         // запишем их в БД
         $auth->add($admin);

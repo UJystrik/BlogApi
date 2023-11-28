@@ -11,7 +11,6 @@ class CreatePublicationForm extends Model
 {
     public $accessToken;
     public $text;
-
     private $_newPublication;
 
     public function rules()
@@ -23,7 +22,7 @@ class CreatePublicationForm extends Model
                 'message' => 'User not found'
             ],
             ['text', 'required'],
-            ['text', 'string', 'max' => Publication::MAX_TEXT_LENGTH],
+            ['text', 'string', 'max' => \Yii::$app->params['publication.maxLength']],
         ];
     }
 

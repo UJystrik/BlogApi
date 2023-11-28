@@ -37,7 +37,7 @@ class AdminController extends Controller
                 throw new Exception('The token has not been saved');
             }
             //addRole
-            $this->setUserRole($newUser, User::ROLE_ADMIN);
+            $this->setUserRole($newUser, \Yii::$app->params['user.roleAdmin']);
 
             $transaction->commit();
         } catch (\Exception $exception){

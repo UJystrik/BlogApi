@@ -32,7 +32,7 @@ class CreatePublicationCommentForm extends Model
             ],
 
             ['text', 'required'],
-            ['text', 'string', 'max' => PublicationComment::MAX_LENGTH_COMMENT_TEXT],
+            ['text', 'string', 'max' => \Yii::$app->params['publication.maxLength']],
         ];
     }
 
