@@ -1,15 +1,15 @@
 <?php
 
-namespace backend\models;
+namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\PublicationCRUD;
+use common\models\BaseUser;
 
 /**
- * PublicationSearch represents the model behind the search form of `backend\models\PublicationCRUD`.
+ * User represents the model behind the search form of `common\models\BaseUser`.
  */
-class PublicationSearch extends PublicationCRUD
+class User extends BaseUser
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class PublicationSearch extends PublicationCRUD
     public function rules()
     {
         return [
-            [['id', 'userId', 'createdAt', 'updatedAt'], 'integer'],
-            [['text'], 'safe'],
+            [['id', 'status', 'createdAt', 'updatedAt'], 'integer'],
+            [['username', 'authKey', 'passwordHash', 'passwordResetToken', 'email', 'verificationToken'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class PublicationSearch extends PublicationCRUD
      */
     public function search($params)
     {
-        $query = PublicationCRUD::find();
+        $query = BaseUser::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +59,17 @@ class PublicationSearch extends PublicationCRUD
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'userId' => $this->userId,
+            'status' => $this->status,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ]);
 
-        $query->andFilterWhere(['like', 'text', $this->text]);
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'authKey', $this->authKey])
+            ->andFilterWhere(['like', 'passwordHash', $this->passwordHash])
+            ->andFilterWhere(['like', 'passwordResetToken', $this->passwordResetToken])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'verificationToken', $this->verificationToken]);
 
         return $dataProvider;
     }

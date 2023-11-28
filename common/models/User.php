@@ -25,7 +25,7 @@ use yii\web\IdentityInterface;
  * @property integer $updatedAt
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends BaseUser implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 10; //default=9
@@ -34,15 +34,6 @@ class User extends ActiveRecord implements IdentityInterface
     const SCENARIO_LOGIN = 'login';
     const ROLE_USER = 'user';
     const ROLE_ADMIN = 'admin';
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return '{{%user}}';
-    }
 
     /**
      * {@inheritdoc}
@@ -69,7 +60,8 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public function scenarios(){
+    public function scenarios()
+    {
         $scenarios = parent::scenarios();
         $scenarios[self::SCENARIO_SIGNUP] = ['username', 'email', 'password'];
         $scenarios[self::SCENARIO_LOGIN] = ['username', 'password'];
@@ -127,7 +119,8 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
+    public static function findByVerificationToken($token)
+    {
         return static::findOne([
             'verificationToken' => $token,
             'status' => self::STATUS_INACTIVE
@@ -241,22 +234,5 @@ class User extends ActiveRecord implements IdentityInterface
         $data['username'] = $this->username;
 
         return $data;
-    }
-
-
-    /**
-     * Связь с таблицей Publication
-     */
-    public function getPublications()
-    {
-        return $this->hasMany(Publication::class, ['userId' => 'id']);
-    }
-
-    /**
-     * Связь с таблицей AccessToken
-     */
-    public function getAccessToken()
-    {
-        return $this->hasOne(AccessToken::class, ['userId' => 'id']);
     }
 }

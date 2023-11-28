@@ -16,15 +16,9 @@ use yii\db\ActiveRecord;
  * @property integer $updatedAt
  */
 
-class PublicationComment extends ActiveRecord
+class PublicationComment extends BasePublicationComment
 {
     const MAX_LENGTH_COMMENT_TEXT = 200;
-
-    public static function tableName()
-    {
-        return '{{%comment_publication}}';
-    }
-
     public function rules()
     {
         return [
@@ -54,7 +48,8 @@ class PublicationComment extends ActiveRecord
         return static::findAll(['userId' => $user_id]);
     }
 
-    public function serializeForArrayShort(){
+    public function serializeForArrayShort()
+    {
         $data = [];
 
         $data['id'] = $this->id;
@@ -62,13 +57,4 @@ class PublicationComment extends ActiveRecord
 
         return $data;
     }
-
-    /**
-     * Связь с таблицей Publication
-     */
-    public function getPublication()
-    {
-        return $this->hasOne(Publication::class, ['id' => 'publicationId']);
-    }
-
 }

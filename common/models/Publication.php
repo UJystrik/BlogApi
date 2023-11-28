@@ -4,8 +4,6 @@ namespace common\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\db\Exception;
 
 /**
  * Publication model
@@ -17,19 +15,12 @@ use yii\db\Exception;
  * @property integer $updatedAt
  */
 
-class Publication extends ActiveRecord
+class Publication extends BasePublication
 {
     const SCENARIO_CREATE = 'create';
     const SCENARIO_VIEW_ALL = 'view-all';
     const SCENARIO_VIEW_MY = 'view-my';
     const MAX_TEXT_LENGTH = 400;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return '{{%publication}}';
-    }
 
     public function rules()
     {
@@ -40,7 +31,8 @@ class Publication extends ActiveRecord
         ];
     }
 
-    public function scenarios(){
+    public function scenarios()
+    {
         $scenarios = parent::scenarios();
         $scenarios[self::SCENARIO_CREATE] = ['accessToken', 'text'];
         $scenarios[self::SCENARIO_VIEW_ALL] = ['limit', 'offset'];
@@ -80,7 +72,8 @@ class Publication extends ActiveRecord
         return $this->getPrimaryKey();
     }
 
-    public function serializeForArrayShort(){
+    public function serializeForArrayShort()
+    {
         $data = [];
 
         $data['id'] = $this->id;
@@ -89,7 +82,8 @@ class Publication extends ActiveRecord
         return $data;
     }
 
-    public function serializeForArray(){
+    public function serializeForArray()
+    {
         $data = $this->serializeForArrayShort();
 
         $data['createdAt'] = $this->createdAt;
@@ -97,21 +91,4 @@ class Publication extends ActiveRecord
 
         return $data;
     }
-
-    /**
-     * Связь с таблицей User
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['id' => 'userId']);
-    }
-
-    /**
-     * Связь с таблицей PublicationComment
-     */
-    public function getPublicationComments()
-    {
-        return $this->hasMany(PublicationComment::class, ['publicationId' => 'id']);
-    }
-
 }

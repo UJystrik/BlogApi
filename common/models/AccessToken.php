@@ -13,16 +13,8 @@ use yii\db\ActiveRecord;
  * @property string $accessToken
  */
 
-class AccessToken extends ActiveRecord
+class AccessToken extends BaseAccessToken
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return '{{%access_token}}';
-    }
-
     public function setAccessToken()
     {
         $authKey = Yii::$app->security->generateRandomString();
@@ -41,19 +33,17 @@ class AccessToken extends ActiveRecord
         return $this->accessToken;
     }
 
-    public static function findByAccessToken($accessToken){
+    public static function findByAccessToken($accessToken)
+    {
         return static::findOne(['accessToken' => $accessToken]);
     }
 
-    public function serializeForArrayShort(){
+    public function serializeForArrayShort()
+    {
         $data = [];
 
         $data['token'] = $this->accessToken;
 
         return $data;
-    }
-
-    public function getUser(){
-        return $this->hasOne(User::class, ['id' => 'userId']);
     }
 }
